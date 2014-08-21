@@ -886,7 +886,7 @@ password_query = SELECT username as user, password as password, \
         concat('*:bytes=', quota) AS userdb_quota_rule, uid AS userdb_uid, gid AS userdb_gid \
     FROM mailbox \
         WHERE username = '%Lu' AND active = '1' \
-            AND ( access_restriction = 'ALL' OR LOCATE( '%Us', access_restriction ) > 0 )name = '%u'
+            AND ( access_restriction = 'ALL' OR LOCATE( '%Us', access_restriction ) > 0 )
             
 user_query = SELECT homedir AS home, maildir AS mail, \
         concat('*:bytes=', quota) as quota_rule, uid, gid \
