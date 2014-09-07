@@ -1017,12 +1017,12 @@ MYDOMAINS=$VMB_DOMAIN
 NOTIFY=$VMB_ADMIN_MAIL
 
 
-MYDOM_RE=.+@`echo "\$MYDOMAINS" |  sed 's/,/$|.+@/g'`$
+MYDOM_RE=.+@$(echo "\$MYDOMAINS" |  sed 's/,/$|.+@/g')$
 
 echo \$MYDOM_RE
-if [ X`echo \$SENDER | egrep \$MYDOM_RE` != "X" ];
+if [ X$(echo \$SENDER | egrep \$MYDOM_RE) != "X" ];
     then MAILTO=\$SENDER,\$NOTIFY
-    else MAILTO=`echo "\$RECIPIENTS" | egrep \$MYDOM_RE | tr '\n' ','`\$NOTIFY
+    else MAILTO=$(echo "\$RECIPIENTS" | egrep \$MYDOM_RE | tr '\n' ',')\$NOTIFY
 fi
 
 LINE="-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
@@ -1079,7 +1079,6 @@ WHITETXT "Loading main opendkim config"
 cat > /etc/opendkim.conf <<END
 ## BEFORE running OpenDKIM you must:
 ## - edit your DNS records to publish your public keys
-
 ## CONFIGURATION OPTIONS
 PidFile /var/run/opendkim/opendkim.pid
 AutoRestart     yes
@@ -1095,7 +1094,6 @@ Umask   002
 Canonicalization        relaxed/simple
 Selector        default
 MinimumKeyBits 1024
-
 KeyTable        /etc/opendkim/KeyTable
 SigningTable    refile:/etc/opendkim/SigningTable
 END
@@ -1142,7 +1140,7 @@ printf "\033c"
 ;;
 "exit")
 REDTXT "------> bye"
-echo -e "\a\a\a"
+echo -e "\a"
 exit
 ;;
 ###################################################################################
