@@ -334,14 +334,14 @@ RETVAL=0
 start() {
         echo -n \$"Starting ClamSmtpd: "
         daemon /usr/sbin/clamsmtpd -f \$CONFIG_FILE -p \$PID_DIR/clamsmtpd.pid
-        RETVAL=$?
+        RETVAL=\$?
         echo
         [ \$RETVAL -eq 0 ] && touch /var/lock/subsys/clamsmtpd
         return \$RETVAL
 }
 
 stop() {
-        echo -n $"Stopping ClamSmtpd: "
+        echo -n \$"Stopping ClamSmtpd: "
         killproc clamsmtpd
         RETVAL=\$?
         echo
