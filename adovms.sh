@@ -179,7 +179,7 @@ while [ 1 ]
 do
         showMenu
         read CHOICE
-        case "$CHOICE" in
+        case "${CHOICE}" in
                 "repo")
 echo
 echo
@@ -191,7 +191,7 @@ WHITETXT "======================================================================
 echo
 echo -n "---> Start EPEL repository installation? [y/n][n]:"
 read repoE_install
-if [ "$repoE_install" == "y" ];then
+if [ "${repoE_install}" == "y" ];then
    echo
      GREENTXT "Running Installation of Extra Packages for Enterprise Linux"
      echo
@@ -210,7 +210,7 @@ WHITETXT "======================================================================
 echo
 echo -n "---> Start ATrpms Testing Repository installation? [y/n][n]:"
 read repoC_install
-if [ "$repoC_install" == "y" ];then
+if [ "${repoC_install}" == "y" ];then
    echo
      GREENTXT "Running Installation of ATrpms Testing repository"
      echo
@@ -230,7 +230,7 @@ WHITETXT "======================================================================
 echo
 echo -n "---> Start Repoforge repository installation? [y/n][n]:"
 read repoF_install
-if [ "$repoF_install" == "y" ];then
+if [ "${repoF_install}" == "y" ];then
    echo
      GREENTXT "Running Installation of Repoforge"
      echo
@@ -264,7 +264,7 @@ echo
 echo
 echo -n "---> Start mail packages installation? [y/n][n]:"
 read mail_install
-if [ "$mail_install" == "y" ];then
+if [ "${mail_install}" == "y" ];then
 		echo
     GREENTXT "Running mail packages installation"
 		echo
@@ -397,7 +397,7 @@ echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 echo
 echo -n "---> Download and configure ViMbAdmin 3? [y/n][n]:"
 read vmb_down
-if [ "$vmb_down" == "y" ];then
+if [ "${vmb_down}" == "y" ];then
      read -e -p "---> Edit your installation folder full path: " -i "/var/www/html/vmb" VMB_PATH
 	 echo
         echo "  ViMbAdmin will be installed into:" 
@@ -423,7 +423,7 @@ if [ "$vmb_down" == "y" ];then
 		cp ${VMB_PATH}/public/.htaccess.dist ${VMB_PATH}/public/.htaccess
 echo
 cat > /root/adovms/.adovms_index <<END
-mail	$VMB_PATH
+mail	${VMB_PATH}
 END
 	fi
 echo
@@ -443,7 +443,7 @@ echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 echo
 echo -n "---> Download and configure ROUNDCUBE 1.x? [y/n][n]:"
 read rcb_down
-if [ "$rcb_down" == "y" ];then
+if [ "${rcb_down}" == "y" ];then
      read -e -p "---> Edit your installation folder full path: " -i "/var/www/html/rcb" RCB_PATH
 	 echo
         echo "  ROUNDCUBE will be installed into:" 
@@ -488,7 +488,7 @@ WHITETXT "Creating ViMbAdmin MySQL DATABASE and USER"
 echo
 echo -n "---> Generate ViMbAdmin strong password? [y/n][n]:"
 read vmb_pass_gen
-if [ "$vmb_pass_gen" == "y" ];then
+if [ "${vmb_pass_gen}" == "y" ];then
    echo
      VMB_PASSGEN=$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1)
      WHITETXT "ViMbAdmin database password: ${RED} ${VMB_PASSGEN}"
@@ -502,9 +502,9 @@ read -p "---> Enter ViMbAdmin database name : " VMB_DB_NAME
 read -p "---> Enter ViMbAdmin database user : " VMB_DB_USER_NAME
 echo
 mysql -u root -p${MYSQL_ROOT_PASS} <<EOMYSQL
-CREATE USER '$VMB_DB_USER_NAME'@'$VMB_DB_HOST' IDENTIFIED BY '$VMB_PASSGEN';
-CREATE DATABASE $VMB_DB_NAME;
-GRANT ALL PRIVILEGES ON $VMB_DB_NAME.* TO '$VMB_DB_USER_NAME'@'$VMB_DB_HOST' WITH GRANT OPTION;
+CREATE USER '${VMB_DB_USER_NAME}'@'${VMB_DB_HOST}' IDENTIFIED BY '${VMB_PASSGEN}';
+CREATE DATABASE ${VMB_DB_NAME};
+GRANT ALL PRIVILEGES ON ${VMB_DB_NAME}.* TO '${VMB_DB_USER_NAME}'@'${VMB_DB_HOST}' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 exit
 EOMYSQL
@@ -512,13 +512,13 @@ echo
 echo
 echo -n "---> SETUP ROUNDCUBE MySQL DATABASE AND USER 1.x? [y/n][n]:"
 read rcb_sdb
-if [ "$rcb_sdb" == "y" ];then
+if [ "${rcb_sdb}" == "y" ];then
 echo
 WHITETXT "CREATING ROUNDCUBE MySQL DATABASE AND USER"
 echo
 echo -n "---> Generate ROUNDCUBE strong password? [y/n][n]:"
 read rcb_pass_gen
-if [ "$rcb_pass_gen" == "y" ];then
+if [ "${rcb_pass_gen}" == "y" ];then
    echo
      RCB_PASSGEN=$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1)
      WHITETXT "ROUNDCUBE database password: ${RED} ${RCB_PASSGEN}"
@@ -532,9 +532,9 @@ read -p "---> Enter ROUNDCUBE database name : " RCB_DB_NAME
 read -p "---> Enter ROUNDCUBE database user : " RCB_DB_USER_NAME
 echo
 mysql -u root -p${MYSQL_ROOT_PASS} <<EOMYSQL
-CREATE USER '$RCB_DB_USER_NAME'@'$RCB_DB_HOST' IDENTIFIED BY '$RCB_PASSGEN';
-CREATE DATABASE $RCB_DB_NAME /*!40101 CHARACTER SET utf8 COLLATE utf8_general_ci */;
-GRANT ALL PRIVILEGES ON $RCB_DB_NAME.* TO '$RCB_DB_USER_NAME'@'$RCB_DB_HOST' WITH GRANT OPTION;
+CREATE USER '${RCB_DB_USER_NAME}'@'${RCB_DB_HOST}' IDENTIFIED BY '${RCB_PASSGEN}';
+CREATE DATABASE ${RCB_DB_NAME} /*!40101 CHARACTER SET utf8 COLLATE utf8_general_ci */;
+GRANT ALL PRIVILEGES ON ${RCB_DB_NAME}.* TO '${RCB_DB_USER_NAME}'@'${RCB_DB_HOST}' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 exit
 EOMYSQL
@@ -549,7 +549,7 @@ WHITETXT "======================================================================
 echo
 echo -n "---> Load preconfigured postfix dovecot configs? [y/n][n]:"
 read load_configs
-if [ "$load_configs" == "y" ];then
+if [ "${load_configs}" == "y" ];then
 echo
 REDTXT "YOU HAVE TO CHECK THEM AFTER ANYWAY"
 echo
@@ -557,24 +557,24 @@ mkdir -p /etc/postfix/mysql
 mkdir -p /etc/postfix/config
 WHITETXT "Writing Postfix/ViMbAdmin mysql connection files"
 cat > /etc/postfix/mysql/virtual-alias-maps.cf <<END
-user = $VMB_DB_USER_NAME
-password = $VMB_PASSGEN
-hosts = $VMB_DB_HOST
-dbname = $VMB_DB_NAME
+user = ${VMB_DB_USER_NAME}
+password = ${VMB_PASSGEN}
+hosts = ${VMB_DB_HOST}
+dbname = ${VMB_DB_NAME}
 query = SELECT goto FROM alias WHERE address = '%s' AND active = '1'
 END
 cat > /etc/postfix/mysql/virtual-mailbox-domains.cf <<END
-user = $VMB_DB_USER_NAME
-password = $VMB_PASSGEN
-hosts = $VMB_DB_HOST
-dbname = $VMB_DB_NAME
+user = ${VMB_DB_USER_NAME}
+password = ${VMB_PASSGEN}
+hosts = ${VMB_DB_HOST}
+dbname = ${VMB_DB_NAME}
 query = SELECT domain FROM domain WHERE domain = '%s' AND backupmx = '0' AND active = '1'
 END
 cat > /etc/postfix/mysql/virtual-mailbox-maps.cf <<END
-user = $VMB_DB_USER_NAME
-password = $VMB_PASSGEN
-hosts = $VMB_DB_HOST
-dbname = $VMB_DB_NAME
+user = ${VMB_DB_USER_NAME}
+password = ${VMB_PASSGEN}
+hosts = ${VMB_DB_HOST}
+dbname = ${VMB_DB_NAME}
 query = SELECT maildir FROM mailbox WHERE username = '%s' AND active = '1'
 END
 echo
@@ -585,7 +585,7 @@ read -p "---> Enter your admin email : " VMB_ADMIN_MAIL
 read -e -p "---> Enter your ssl cert location: " -i "/etc/ssl/domain.crt"  VMB_SSL_CRT
 read -e -p "---> Enter your ssl key location: " -i "/etc/ssl/server.key"  VMB_SSL_KEY
 cat > /etc/postfix/main.cf <<END
-smtpd_banner = \$myhostname ESMTP Goofy
+smtpd_banner = \${myhostname} ESMTP XBOX
 
 #specify 0 when mail delivery should be tried only once.
 #maximal_queue_lifetime = 0
@@ -608,8 +608,8 @@ broken_sasl_auth_clients = no
 additional_config_dir = /etc/postfix/config
 
 smtpd_forbidden_commands = CONNECT GET POST
-smtpd_tls_cert_file = $VMB_SSL_CRT
-smtpd_tls_key_file = $VMB_SSL_KEY
+smtpd_tls_cert_file = ${VMB_SSL_CRT}
+smtpd_tls_key_file = ${VMB_SSL_KEY}
 smtpd_tls_auth_only = yes
 smtpd_tls_security_level = may
 smtpd_sasl_auth_enable = yes
@@ -624,11 +624,11 @@ smtp_tls_session_cache_database = btree:\${data_directory}/smtp_scache
 smtp_tls_security_level = may
 smtp_always_send_ehlo = yes
 
-myhostname = $VMB_MYHOSTNAME
-mydomain = $VMB_DOMAIN
+myhostname = ${VMB_MYHOSTNAME}
+mydomain = ${VMB_DOMAIN}
 mydestination = localhost
 mynetworks = 127.0.0.0/8
-myorigin = \$mydomain
+myorigin = \${mydomain}
 
 mailbox_size_limit = 0
 
@@ -669,14 +669,14 @@ helo_access          = check_helo_access pcre:\$additional_config_dir/helo_check
 mx_access            = check_sender_mx_access cidr:\$additional_config_dir/mx_access
 
 smtpd_milters           = inet:127.0.0.1:8891
-non_smtpd_milters       = \$smtpd_milters
+non_smtpd_milters       = \${smtpd_milters}
 milter_default_action   = quarantine
 milter_protocol   = 6
 
 content_filter = scan:127.0.0.1:10025
 
 #notify_classes = bounce, delay, policy, protocol, resource, software
-#error_notice_recipient = $VMB_ADMIN_MAIL
+#error_notice_recipient = ${VMB_ADMIN_MAIL}
 
 smtpd_client_restrictions =
                             white_client_ip,
@@ -820,8 +820,8 @@ mail_privileged_group = vmail
 
 ssl = required
 
-ssl_cert = <$VMB_SSL_CRT
-ssl_key = <$VMB_SSL_KEY
+ssl_cert = <${VMB_SSL_CRT}
+ssl_key = <${VMB_SSL_KEY}
 
 ssl_cipher_list = ALL:!LOW:!SSLv2:!EXP:!aNULL
 
@@ -872,7 +872,7 @@ user = root
 protocol lda {
   auth_socket_path = /var/run/dovecot/auth-master
   log_path = /home/vmail/dovecot-deliver.log
-  postmaster_address = $VMB_ADMIN_MAIL
+  postmaster_address = ${VMB_ADMIN_MAIL}
 }
 END
 
@@ -880,7 +880,7 @@ echo
 WHITETXT "Writing Dovecot mysql connection file"
 cat > /etc/dovecot/dovecot-sql.conf <<END
 driver = mysql
-connect = host=$VMB_DB_HOST dbname=$VMB_DB_NAME user=$VMB_DB_USER_NAME password=$VMB_PASSGEN
+connect = host=${VMB_DB_HOST} dbname=${VMB_DB_NAME} user=${VMB_DB_USER_NAME} password=${VMB_PASSGEN}
 default_pass_scheme = SSHA512
 
 password_query = SELECT username as user, password as password, \
@@ -1014,17 +1014,17 @@ cat > /etc/postfix/valert.sh <<END
 #
 
 # Local domains (comma separated without spaces)
-MYDOMAINS=$VMB_DOMAIN
+MYDOMAINS=${VMB_DOMAIN}
 # Email addresses to send alerts to (comma separated without spaces)
-NOTIFY=$VMB_ADMIN_MAIL
+NOTIFY=${VMB_ADMIN_MAIL}
 
 
-MYDOM_RE=.+@$(echo "\$MYDOMAINS" |  sed 's/,/$|.+@/g')$
+MYDOM_RE=.+@$(echo "\${MYDOMAINS}" |  sed 's/,/$|.+@/g')$
 
-echo \$MYDOM_RE
-if [ X$(echo \$SENDER | egrep \$MYDOM_RE) != "X" ];
-    then MAILTO=\$SENDER,\$NOTIFY
-    else MAILTO=$(echo "\$RECIPIENTS" | egrep \$MYDOM_RE | tr '\n' ',')\$NOTIFY
+echo \${MYDOM_RE}
+if [ X$(echo \${SENDER} | egrep \${MYDOM_RE}) != "X" ];
+    then MAILTO=\${SENDER},\${NOTIFY}
+    else MAILTO=$(echo "\$RECIPIENTS" | egrep \${MYDOM_RE} | tr '\n' ',')\${NOTIFY}
 fi
 
 LINE="-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
@@ -1032,23 +1032,23 @@ LINE="-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 #(date "+%d-%m-%Y %H:%M:%S"
 (date
  echo
- echo "Virus name:     \$VIRUS"
- echo "Sender:         \$SENDER"
- echo "Recipient(s):   \$RECIPIENTS"
- echo "SMTP client:    \$CLIENT"
- echo "SMTP server:    \$SERVER"
- echo "Remote client:  \$REMOTE" | tr -d '\r'
+ echo "Virus name:     \${VIRUS}"
+ echo "Sender:         \${SENDER}"
+ echo "Recipient(s):   \${RECIPIENTS}"
+ echo "SMTP client:    \${CLIENT}"
+ echo "SMTP server:    \${SERVER}"
+ echo "Remote client:  \${REMOTE}" | tr -d '\r'
  echo
- if [ "x\$EMAIL" != "x" ] && [ -f \$EMAIL ]
+ if [ "x\${EMAIL}" != "x" ] && [ -f \${EMAIL} ]
  then
-	echo "Quarantined to: \$EMAIL"
+	echo "Quarantined to: \${EMAIL}"
 	echo
 	echo Headers follow:
-	echo \$LINE
-	sed -n '1,/^.$/s/.$//gp' "\$EMAIL"
-	echo \$LINE
+	echo \${LINE}
+	sed -n '1,/^.$/s/.$//gp' "\${EMAIL}"
+	echo \${LINE}
  fi
-) | cat -v | mail -s "[ VIRUS  ALERT ]: \$VIRUS found on \$SERVER" \$MAILTO
+) | cat -v | mail -s "[ VIRUS  ALERT ]: \${VIRUS} found on \${SERVER}" \${MAILTO}
 END
 echo
 WHITETXT "============================================================================="
