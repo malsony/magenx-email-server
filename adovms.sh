@@ -835,6 +835,8 @@ namespace {
 protocols = imap
 
 service imap-login {
+        service_count = 1
+        process_min_avail = 4
         inet_listener imap {
         port = 0
         }
