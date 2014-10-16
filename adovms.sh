@@ -822,7 +822,7 @@ ssl = required
 
 ssl_cert = <${VMB_SSL_CRT}
 ssl_key = <${VMB_SSL_KEY}
-
+ssl_protocols = !SSLv2 !SSLv3
 ssl_cipher_list = ALL:!LOW:!SSLv2:!EXP:!aNULL
 
 namespace {
