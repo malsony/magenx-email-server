@@ -612,6 +612,7 @@ smtpd_tls_cert_file = ${VMB_SSL_CRT}
 smtpd_tls_key_file = ${VMB_SSL_KEY}
 smtpd_tls_auth_only = yes
 smtpd_tls_security_level = may
+smtpd_tls_protocols=!SSLv2,!SSLv3
 smtpd_sasl_auth_enable = yes
 smtpd_sasl_type = dovecot
 smtpd_sasl_path = private/auth
@@ -622,6 +623,7 @@ smtpd_tls_session_cache_database = btree:\${data_directory}/smtpd_scache
 
 smtp_tls_session_cache_database = btree:\${data_directory}/smtp_scache
 smtp_tls_security_level = may
+smtp_tls_protocols=!SSLv2,!SSLv3
 smtp_always_send_ehlo = yes
 
 myhostname = ${VMB_MYHOSTNAME}
