@@ -991,7 +991,7 @@ Quarantine: off
 # Enable transparent proxy support
 TransparentProxy: off
 # User to switch to
-User: clam
+User: clamav
 # Virus actions: There's an option to run a script every time a virus is found.
 # !IMPORTANT! This can open a hole in your server's security big enough to drive
 # farm vehicles through. Be sure you know what you're doing. !IMPORTANT!
