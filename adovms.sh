@@ -5,7 +5,7 @@
 #  All rights reserved.                                              #
 #====================================================================#
 
-ADOVMS_VER="3.0.10-1"
+ADOVMS_VER="3.0.10-3"
 
 # Simple colors
 RED="\e[31;40m"
@@ -629,7 +629,7 @@ smtp_always_send_ehlo = yes
 myhostname = ${VMB_MYHOSTNAME}
 mydomain = ${VMB_DOMAIN}
 mydestination = localhost
-mynetworks = 127.0.0.0/8
+mynetworks = 127.0.0.0/8 [::1]/128
 myorigin = \${mydomain}
 
 mailbox_size_limit = 0
