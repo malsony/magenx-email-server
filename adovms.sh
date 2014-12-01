@@ -93,7 +93,6 @@ if [ "$ARCH" = "x86_64" ]; then
   exit 1
 fi
 
-
 # network is up?
 host1=74.125.24.106
 host2=208.80.154.225
@@ -108,16 +107,24 @@ if [[ ${RESULT} == up ]]; then
   exit 1
 fi
 
-# we need php > 5.4.x
-PHPVER=$(php -r \@phpinfo\(\)\; | grep 'PHP Version' -m 1 | awk {'print $4'} | cut -d'.' -f 2)
-if [ ${PHPVER} = 4 ] || [ ${PHPVER} > 4 ]; then
-  GREENTXT "PASS: YOUR PHP IS ${WHITE}${BOLD}$(php -r \@phpinfo\(\)\; | grep 'PHP Version' -m 1 | awk {'print $4'})"
+# dumb check for php package
+rpm  --quiet -q php
+if [ "$?" = 0 ]
+  then
+  # we need php > 5.4.x
+  PHPVER=$(php -r \@phpinfo\(\)\; | grep 'PHP Version' -m 1 | awk {'print $4'} | cut -d'.' -f 2)
+  if [ ${PHPVER} = 4 ] || [ ${PHPVER} > 4 ]; then
+    GREENTXT "PASS: YOUR PHP IS ${WHITE}${BOLD}$(php -r \@phpinfo\(\)\; | grep 'PHP Version' -m 1 | awk {'print $4'})"
+    else
+    REDTXT "ERROR: YOUR PHP VERSION IS NOT > 5.4"
+    YELLOWTXT "------> CONFIGURATION FOR PHP > 5.4 ONLY."
+    echo
+    exit 1
+  fi
   else
+  REDTXT "ERROR: PHP PACKAGE IS NOT INSTALLED"
   echo
-  REDTXT "ERROR: YOUR PHP VERSION IS NOT > 5.4"
-  YELLOWTXT "------> CONFIGURATION FOR PHP > 5.4 ONLY."
-  echo
-  exit 1
+  exit
 fi
 echo
 echo
@@ -125,7 +132,7 @@ echo
 #                                     CHECKS END                                  #
 ###################################################################################
 echo
-if grep -q "yes" ~/adovms/.terms >/dev/null 2>&1 ; then
+if grep -q "yes" /root/adovms/.terms >/dev/null 2>&1 ; then
 echo "...... loading menu"
 sleep 1
       else
@@ -144,8 +151,8 @@ sleep 1
  	read terms_agree
         if [ "$terms_agree" == "y" ];then
           echo
-            mkdir -p ~/adovms
-            echo "yes" > ~/adovms/.terms
+            mkdir -p /root/adovms
+            echo "yes" > /root/adovms/.terms
             else
             echo "Exiting"
            exit 1
