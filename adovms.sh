@@ -1,7 +1,7 @@
 #!/bin/bash
 #====================================================================#
 #  MagenX - Automated Deployment of Virtual Mail Server              #
-#  Copyright (C) 2013 admin@magentomod.com                           #
+#  Copyright (C) 2014 admin@magenx.com                               #
 #  All rights reserved.                                              #
 #====================================================================#
 
@@ -71,7 +71,7 @@ if [[ ${EUID} -ne 0 ]]; then
 fi
 
 # do we have CentOS 6?
-if grep -q "CentOS release 6" /etc/redhat-release > /dev/null 2>&1 ; then
+if [ -f /etc/redhat-release ]; then
   GREENTXT "PASS: CENTOS RELEASE 6"
   else
   echo
