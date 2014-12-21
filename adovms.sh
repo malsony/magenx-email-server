@@ -461,7 +461,7 @@ if [ "${rcb_down}" == "y" ];then
 		mkdir -p ${RCB_PATH}
                 cd ${RCB_PATH}
 		echo
-		wget -qO - http://downloads.sourceforge.net/project/roundcubemail/roundcubemail/1.0.3/roundcubemail-1.0.3.tar.gz | tar -xz --strip 1
+		wget -qO - http://downloads.sourceforge.net/project/roundcubemail/roundcubemail/1.0.4/roundcubemail-1.0.4.tar.gz | tar -xz --strip 1
 		echo
 		ls -l ${RCB_PATH}
 		echo
