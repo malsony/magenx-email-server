@@ -594,9 +594,6 @@ read -e -p "---> Enter your ssl key location: " -i "/etc/ssl/server.key"  VMB_SS
 cat > /etc/postfix/main.cf <<END
 smtpd_banner = \${myhostname} ESMTP XBOX
 
-#specify 0 when mail delivery should be tried only once.
-#maximal_queue_lifetime = 0
-
 queue_run_delay = 1h
 minimal_backoff_time = 1h
 maximal_queue_lifetime = 3h
@@ -648,9 +645,7 @@ virtual_uid_maps = static:5000
 virtual_gid_maps = static:5000
 virtual_transport = dovecot
 
-smtpd_restriction_classes =
-                            verify_sender,
-                            rbl_cbl_abuseat_org,
+smtpd_restriction_classes = rbl_cbl_abuseat_org,
                             rbl_sbl_spamhaus_org,
                             rbl_dul_ru, 
                             rbl_spamcop,
@@ -662,8 +657,6 @@ smtpd_restriction_classes =
                             black_client,
                             mx_access
 
-
-verify_sender        = reject_unverified_sender, permit
 rbl_cbl_abuseat_org  = reject_rbl_client cbl.abuseat.org
 rbl_dul_ru           = reject_rbl_client dul.ru
 rbl_sbl_spamhaus_org = reject_rbl_client sbl.spamhaus.org
@@ -687,8 +680,7 @@ content_filter = scan:127.0.0.1:10025
 #notify_classes = bounce, delay, policy, protocol, resource, software
 #error_notice_recipient = ${VMB_ADMIN_MAIL}
 
-smtpd_client_restrictions =
-                            white_client_ip,
+smtpd_client_restrictions = white_client_ip,
                             black_client_ip,
                             white_client,
                             black_client,
@@ -706,8 +698,7 @@ smtpd_client_restrictions =
                             reject_unknown_recipient_domain,
                             reject_unknown_sender_domain
 
-smtpd_sender_restrictions =
-                            white_client,
+smtpd_sender_restrictions = white_client,
                             white_client_ip,
                             black_client_ip,
                             reject_unknown_recipient_domain,
@@ -722,8 +713,7 @@ smtpd_sender_restrictions =
 				
 smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
 
-smtpd_recipient_restrictions = verify_sender
-                               white_client,
+smtpd_recipient_restrictions = white_client,
                                helo_access,
                                reject_unknown_recipient_domain,
                                reject_unknown_sender_domain,
@@ -737,8 +727,7 @@ smtpd_recipient_restrictions = verify_sender
                                reject_unauth_destination,
                                reject_multi_recipient_bounce
 
-smtpd_data_restrictions =
-                          reject_unauth_pipelining,
+smtpd_data_restrictions = reject_unauth_pipelining,
                           reject_multi_recipient_bounce
 						  
 sample_directory = /usr/share/doc/postfix-2.10.0/samples
