@@ -5,7 +5,7 @@
 #  All rights reserved.                                              #
 #====================================================================#
 
-ADOVMS_VER="3.0.10-3"
+ADOVMS_VER="3.0.10-5"
 
 # Simple colors
 RED="\e[31;40m"
@@ -872,6 +872,13 @@ protocol lda {
   log_path = /home/vmail/dovecot-deliver.log
   postmaster_address = ${VMB_ADMIN_MAIL}
 }
+
+## debug
+#auth_verbose=yes
+#auth_debug=yes
+#auth_debug_passwords=yes
+#mail_debug=yes
+#verbose_ssl=yes
 END
 
 echo
