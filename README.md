@@ -10,7 +10,7 @@ OpenDKIM signature<br/>
 SMTP Virus Filter<br/>
 
 *server key file and ssl certificate must be installed*<br/>
-*php > 5.4 must be installed*<br/>
+**php > 5.4 must be installed**<br/>
 <br/>
 
 About this setup
