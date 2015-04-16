@@ -167,7 +167,7 @@ showMenu () {
 printf "\033c"
         echo
         echo
-        echo -e "${DGREYBG}${BOLD}  Virtual Mail Server Configuration v.$ADOVMS_VER  ${RESET}"
+        echo -e "${DGREYBG}${BOLD}  Virtual Mail Server Configuration v.${ADOVMS_VER}  ${RESET}"
         echo -e "\t\t${BLUE}${BOLD}:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::  ${RESET}"
         echo
         echo -e "\t\t${WHITE}${BOLD}-> For repositories installation enter :  ${YELLOW} repo  ${RESET}"
@@ -448,7 +448,7 @@ echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 BLUEBG " NOW DOWNLOADING ROUNDCUBE "
 echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 echo
-echo -n "---> Download and configure ROUNDCUBE 1.x? [y/n][n]:"
+echo -n "---> Download and configure ROUNDCUBE 1.1.x? [y/n][n]:"
 read rcb_down
 if [ "${rcb_down}" == "y" ];then
      read -e -p "---> Edit your installation folder full path: " -i "/var/www/html/rcb" RCB_PATH
@@ -461,7 +461,7 @@ if [ "${rcb_down}" == "y" ];then
 		mkdir -p ${RCB_PATH}
                 cd ${RCB_PATH}
 		echo
-		wget -qO - http://downloads.sourceforge.net/project/roundcubemail/roundcubemail/1.0.5/roundcubemail-1.0.5.tar.gz | tar -xz --strip 1
+		wget -qO - http://downloads.sourceforge.net/project/roundcubemail/roundcubemail/1.1.1/roundcubemail-1.1.1.tar.gz | tar -xz --strip 1
 		echo
 		ls -l ${RCB_PATH}
 		echo
