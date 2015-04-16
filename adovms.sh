@@ -108,10 +108,10 @@ if [[ ${RESULT} == up ]]; then
 fi
 
 # dumb check for php package
-which php
+which php > /dev/null 2>&1
 if [ "$?" = 0 ]
   then
-  # we need php > 5.4.x
+  # we need php > 5.4.0
   PHPVER=$(php -v | head -1 | awk {'print $2'})
   if echo ${PHPVER} 5.4.0 | awk '{exit !( $1 > $2)}'; then
     GREENTXT "PASS: YOUR PHP IS ${WHITE}${BOLD}${PHPVER}"
