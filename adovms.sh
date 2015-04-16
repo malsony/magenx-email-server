@@ -5,7 +5,7 @@
 #  All rights reserved.                                              #
 #====================================================================#
 
-ADOVMS_VER="3.0.10-5"
+ADOVMS_VER="3.0.10-8"
 
 # Simple colors
 RED="\e[31;40m"
@@ -108,13 +108,13 @@ if [[ ${RESULT} == up ]]; then
 fi
 
 # dumb check for php package
-rpm  --quiet -q php
+which php
 if [ "$?" = 0 ]
   then
   # we need php > 5.4.x
-  PHPVER=$(php -r \@phpinfo\(\)\; | grep 'PHP Version' -m 1 | awk {'print $4'} | cut -d'.' -f 2)
-  if [ ${PHPVER} = 4 ] || [ ${PHPVER} > 4 ]; then
-    GREENTXT "PASS: YOUR PHP IS ${WHITE}${BOLD}$(php -r \@phpinfo\(\)\; | grep 'PHP Version' -m 1 | awk {'print $4'})"
+  PHPVER=$(php -v | head -1 | awk {'print $2'})
+  if echo ${PHPVER} 5.4.0 | awk '{exit !( $1 > $2)}'; then
+    GREENTXT "PASS: YOUR PHP IS ${WHITE}${BOLD}${PHPVER}"
     else
     REDTXT "ERROR: YOUR PHP VERSION IS NOT > 5.4"
     YELLOWTXT "------> CONFIGURATION FOR PHP > 5.4 ONLY."
