@@ -1,7 +1,7 @@
 #!/bin/bash
 #====================================================================#
 #  MagenX - Automated Deployment of Virtual Mail Server              #
-#  Copyright (C) 2014 admin@magenx.com                               #
+#  Copyright (C) 2015 admin@magenx.com                               #
 #  All rights reserved.                                              #
 #====================================================================#
 
@@ -285,10 +285,10 @@ if [ "${mail_install}" == "y" ];then
 		echo
 		yum --disablerepo=rpmforge,atrpms -y install clamsmtp clamd clamav
 		echo
-    GREENTXT "Get the latest postfix (temporary solution)"
+    GREENTXT "Get the latest postfix"
 		echo
                 rpm -e --nodeps postfix
-		rpm -ihv http://repos.oostergo.net/6/postfix-2.11/postfix-2.11.1-1.el6.x86_64.rpm
+		rpm -ihv http://repos.oostergo.net/6/postfix-3.0/postfix-3.0.1-1.el6.x86_64.rpm
 		echo
                 rpm  --quiet -q postfix dovecot dovecot-pigeonhole opendkim git subversion
     if [ $? = 0 ]
