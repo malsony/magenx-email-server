@@ -71,12 +71,12 @@ if [[ ${EUID} -ne 0 ]]; then
 fi
 
 # do we have CentOS 6?
-if [ -f /etc/redhat-release ]; then
+if grep "CentOS.* 6\." /etc/redhat-release  > /dev/null 2>&1; then
   GREENTXT "PASS: CENTOS RELEASE 6"
   else
   echo
   REDTXT "ERROR: UNABLE TO DETERMINE DISTRIBUTION TYPE."
-  YELLOWTXT "------> THIS CONFIGURATION FOR CENTOS 6."
+  YELLOWTXT "------> THIS CONFIGURATION FOR CENTOS 6"
   echo
   exit 1
 fi
