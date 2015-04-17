@@ -12,13 +12,20 @@ REPO_EPEL="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noar
 
 # Extra packages
 POSTFIX="http://repos.oostergo.net/6/postfix-3.0/postfix-3.0.1-1.el6.x86_64.rpm"
-MAIL_PACKAGES="dovecot dovecot-pigeonhole clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd"
+MAIL_PACKAGES="dovecot dovecot-pigeonhole clamav-filesystem clamav-server clamav-update clamav-milter-systemd clamav-data clamav-server-systemd clamav-scanner-systemd clamav clamav-milter clamav-lib clamav-scanner"
 EXTRA_PACKAGES="opendkim git subversion "
 
 # Configs
 POSTFIX_MAIN_CF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/main.cf"
 DOVECOT_CONF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/dovecot.conf"
 DOVECOT_SQL_CONF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/dovecot-sql.conf"
+CLAMAV_MILTER="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/clamav-milter.conf"
+CLAMAV_SCAN="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/scan.conf"
+
+# Postfix filters
+POSTFIX_FILTERS=(black_client block_dsl helo_checks mx_access white_client white_client_ip)
+POSTFIX_FILTERS_URL="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/postfix/config/"
+
 
 # Simple colors
 RED="\e[31;40m"
@@ -465,94 +472,19 @@ sed -i "s/VMB_PASSGEN/${VMB_PASSGEN}/" /etc/dovecot/dovecot-sql.conf
 echo
 WHITETXT "Writing Postfix PERMIT/REJECT filters. Please uncomment/edit to your needs"
 WHITETXT "at /etc/postfix/config/*"
+cd /etc/postfix/config/
+for FILTER in ${POSTFIX_FILTERS}
+do
+wget -qO ${POSTFIX_FILTERS_URL}${FILTER}
+done
 
-cat > /etc/postfix/config/black_client <<END
-#/^.*\@mail\.ru$/        REJECT        Your e-mail was banned!
-END
-
-cat > /etc/postfix/config/black_client_ip <<END
-#/123\.45\.67\.89/       REJECT        Your IP was banned!
-#/123\.45/               REJECT        Your IP-range was banned!
-#/xyz\.ua/               REJECT        Your Domain was banned!
-#cc\.zxc\.ua/            REJECT        Your Domain was banned!
-END
-
-cat > /etc/postfix/config/block_dsl <<END
-#/^dsl.*\..*/i                   553 AUTO_DSL Please use your internet provider SMTP Server.
-#/.*\.dsl\..*/i                  553 AUTO_DSL2 Please use your internet provider SMTP Server.
-#/[a|x]dsl.*\..*\..*/i           553 AUTO_[A|X]DSL Please use your internet provider SMTP Server.
-#/client.*\..*\..*/i             553 AUTO_CLIENT Please use your internet provider SMTP Server.
-#/cable.*\..*\..*/i              553 AUTO_CABLE Please use your internet provider SMTP Server.
-#/pool\..*/i                     553 AUTO_POOL Please use your internet provider SMTP Server.
-#/.*dial(\.|-).*\..*\..*/i       553 AUTO_DIAL Please use your internet provider SMTP Server.
-#/ppp.*\..*/i                    553 AUTO_PPP Please use your internet provider SMTP Server.
-#/dslam.*\..*\..*/i              553 AUTO_DSLAM Please use your internet provider SMTP Server.
-#/dslb.*\..*\..*/i               553 AUTO_DSLB Please use your internet provider SMTP Server.
-#/node.*\..*\..*/i               553 AUTO_NODE Please use your internet provider SMTP Server.
-END
-
-cat > /etc/postfix/config/helo_checks <<END
-#/^\[?10\.\d{1,3}\.\d{1,3}\.\d{1,3}\]?$/ REJECT Address in RFC 1918 private network
-#/^\[?192\.\d{1,3}\.\d{1,3}\.\d{1,3}\]?$/ REJECT Address in RFC 1918 private network
-#/^\[?172\.\d{1,3}\.\d{1,3}\.\d{1,3}\]?$/ REJECT Address in RFC 1918 private network
-#/\d{2,}[-\.]+\d{2,}/ REJECT Invalid hostname (D-D)
-#/^(((newm|em|gm|m)ail|yandex|rambler|hotbox|chat|rbc|subscribe|spbnit)\.ru)$/ REJECT Faked hostname (\$1)
-#/^(((hotmail|mcim|newm|em)ail|post|hotbox|msn|microsoft|aol|news|compuserve|yahoo|google|earthlink|netscape)\.(com|net))$/ REJECT Faked hostname (\$1)
-#/[^[] *[0-9]+((\.|-|_)[0-9]+){3}/ REJECT Invalid hostname (ipable)
-END
-
-cat > /etc/postfix/config/mx_access <<END
-#127.0.0.1      DUNNO 
-#127.0.0.2      550 Domains not registered properly
-#0.0.0.0/8      REJECT Domain MX in broadcast network 
-#10.0.0.0/8     REJECT Domain MX in RFC 1918 private network 
-#127.0.0.0/8    REJECT Domain MX in loopback network 
-#169.254.0.0/16 REJECT Domain MX in link local network 
-#172.16.0.0/12  REJECT Domain MX in RFC 1918 private network 
-#192.0.2.0/24   REJECT Domain MX in TEST-NET network 
-#192.168.0.0/16 REJECT Domain MX in RFC 1918 private network 
-#224.0.0.0/4    REJECT Domain MX in class D multicast network 
-#240.0.0.0/5    REJECT Domain MX in class E reserved network 
-#248.0.0.0/5    REJECT Domain MX in reserved network
-END
-
-cat > /etc/postfix/config/white_client <<END
-#/^.*\@mail\.ru$/        PERMIT
-END
-
-cat > /etc/postfix/config/white_client_ip <<END
-#/91\.214\.209\.5/        PERMIT
-END
-echo
 echo
 WHITETXT "Writing Clamav-milter config"
-cat > /etc/mail/clamav-milter.conf <<END
-MilterSocket inet:127.0.0.1:7357
-MilterSocketGroup clamav
-MilterSocketMode 660
-FixStaleSocket yes
-User clamilt
-AllowSupplementaryGroups yes
-ReadTimeout 120
-Foreground no
-PidFile /var/run/clamav-milter/clamav-milter.pid
-TemporaryDirectory /var/tmp
-ClamdSocket unix:/var/run/clamd.scan/clamd.sock
-LocalNet local
-LocalNet 127.0.0.1
-MaxFileSize 25M
-OnClean Accept
-OnInfected Reject
-OnFail Defer
-VirusAction /usr/local/bin/my_infected_message_handler
-LogFile /var/log/clamav-milter.log
-LogFileMaxSize 20M
-LogTime yes
-LogSyslog yes
-LogFacility LOG_MAIL
-LogRotate yes
-LogInfected Basic
-END
+wget -qO /etc/mail/clamav-milter.conf ${CLAMAV_MILTER}
+echo
+WHITETXT "Writing Clamav-milter config"
+wget -qO /etc/clamd.d/scan.conf ${CLAMAV_SCAN}
+
 echo
 echo
 WHITETXT "============================================================================="
