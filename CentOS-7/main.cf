@@ -1,5 +1,5 @@
 
-smtpd_banner = \${myhostname} ESMTP XBOX
+smtpd_banner = ${myhostname} ESMTP XBOX
 
 queue_run_delay = 1h
 minimal_backoff_time = 1h
