@@ -5,7 +5,14 @@
 #  All rights reserved.                                              #
 #====================================================================#
 
-ADOVMS_VER="3.0.10-8"
+ADOVMS_VER="3.0.11-3"
+
+# Repositories
+REPO_EPEL="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm"
+
+# Extra packages
+POSTFIX="http://repos.oostergo.net/6/postfix-3.0/postfix-3.0.1-1.el6.x86_64.rpm"
+EXTRA_PACKAGES="dovecot dovecot-pigeonhole opendkim git subversion clamav clamav-milter"
 
 # Simple colors
 RED="\e[31;40m"
@@ -71,12 +78,12 @@ if [[ ${EUID} -ne 0 ]]; then
 fi
 
 # do we have CentOS 6?
-if grep "CentOS.* 6\." /etc/redhat-release  > /dev/null 2>&1; then
-  GREENTXT "PASS: CENTOS RELEASE 6"
+if grep "CentOS.* 7\." /etc/redhat-release  > /dev/null 2>&1; then
+  GREENTXT "PASS: CENTOS RELEASE 7"
   else
   echo
   REDTXT "ERROR: UNABLE TO DETERMINE DISTRIBUTION TYPE."
-  YELLOWTXT "------> THIS CONFIGURATION FOR CENTOS 6"
+  YELLOWTXT "------> THIS CONFIGURATION FOR CENTOS 7"
   echo
   exit 1
 fi
@@ -170,7 +177,6 @@ printf "\033c"
         echo -e "${DGREYBG}${BOLD}  Virtual Mail Server Configuration v.${ADOVMS_VER}  ${RESET}"
         echo -e "\t\t${BLUE}${BOLD}:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::  ${RESET}"
         echo
-        echo -e "\t\t${WHITE}${BOLD}-> For repositories installation enter :  ${YELLOW} repo  ${RESET}"
         echo -e "\t\t${WHITE}${BOLD}-> For packages installation enter     :  ${YELLOW} packages  ${RESET}"
         echo -e "\t\t${WHITE}${BOLD}-> Download and install vimbadmin      :  ${YELLOW} vimbadmin  ${RESET}"
         echo -e "\t\t${WHITE}${BOLD}-> Download and install roundcube      :  ${YELLOW} roundcube  ${RESET}"
@@ -187,110 +193,28 @@ do
         showMenu
         read CHOICE
         case "${CHOICE}" in
-                "repo")
-echo
-echo
-echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-BLUEBG " NOW BEGIN REPOSITORIES INSTALLATION "
-echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-echo
-WHITETXT "============================================================================="
-echo
-echo -n "---> Start EPEL repository installation? [y/n][n]:"
-read repoE_install
-if [ "${repoE_install}" == "y" ];then
-   echo
-     GREENTXT "Running Installation of Extra Packages for Enterprise Linux"
-     echo
-     rpm  --quiet -q epel-release
-  if [ "$?" = 0 ]
-    then
-      GREENTXT "ALREADY INSTALLED"
-       else
-       rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-  fi
-     else
-     YELLOWTXT "EPEL repository installation skipped. Next step"
-fi
-echo
-WHITETXT "============================================================================="
-echo
-echo -n "---> Start ATrpms Testing Repository installation? [y/n][n]:"
-read repoC_install
-if [ "${repoC_install}" == "y" ];then
-   echo
-     GREENTXT "Running Installation of ATrpms Testing repository"
-     echo
-     rpm  --quiet -q atrpms-repo
-  if [ "$?" = 0 ]
-    then
-      GREENTXT "ALREADY INSTALLED"
-      else
-      rpm -Uvh http://dl.atrpms.net/el6-x86_64/atrpms/stable/atrpms-repo-6-7.el6.x86_64.rpm
-  fi
-     echo
-     else
-     YELLOWTXT "ATrpms Testing repository installation skipped. Next step"
-fi
-echo
-WHITETXT "============================================================================="
-echo
-echo -n "---> Start Repoforge repository installation? [y/n][n]:"
-read repoF_install
-if [ "${repoF_install}" == "y" ];then
-   echo
-     GREENTXT "Running Installation of Repoforge"
-     echo
-     rpm  --quiet -q rpmforge-release
-  if [ "$?" = 0 ]
-    then
-      GREENTXT "ALREADY INSTALLED"
-      else
-      rpm -Uvh http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
-  fi
-    echo
-    else
-    YELLOWTXT "Repoforge installation skipped. Next step"
-fi
-echo 
-echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-BLUEBG " REPOSITORIES INSTALLATION FINISHED "
-echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-echo
-echo
-echo
-pause "---> Press [Enter] key to show menu"
-printf "\033c"
-;;
 "packages")
 echo
 echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-BLUEBG " NOW INSTALLING POSTFIX, DOVECOT, CLAMAV, OPENDKIM "
+BLUEBG " NOW INSTALLING POSTFIX, DOVECOT, CLAMAV, MILTER, GIT, SUBVERSION, OPENDKIM "
 echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 echo
 echo
 echo -n "---> Start mail packages installation? [y/n][n]:"
 read mail_install
 if [ "${mail_install}" == "y" ];then
-		echo
+    echo
     GREENTXT "Running mail packages installation"
-		echo
-                yum --enablerepo=atrpms-testing -y install dovecot dovecot-pigeonhole 
-		echo
-    GREENTXT "Running opendkim installation"
-		echo
-		yum --enablerepo=epel-testing -y install opendkim git subversion
-		echo
-    GREENTXT "Running ClamAV antivirus scanner installation"
-		echo
-		yum --disablerepo=rpmforge,atrpms -y install clamsmtp clamd clamav
-		echo
+    echo
+    rpm -qa | grep -qw epel-release || yum install ${REPO_EPEL}
+    yum --enablerepo=epel-testing -y install ${EXTRA_PACKAGES}
+    echo
     GREENTXT "Get the latest postfix"
-		echo
-                rpm -e --nodeps postfix
-		rpm -ihv http://repos.oostergo.net/6/postfix-3.0/postfix-3.0.1-1.el6.x86_64.rpm
-		echo
-                rpm  --quiet -q postfix dovecot dovecot-pigeonhole opendkim git subversion
+    echo
+    rpm -e --nodeps postfix
+    rpm -ihv ${POSTFIX}
+    echo
+    rpm  --quiet -q postfix dovecot dovecot-pigeonhole opendkim git subversion
     if [ $? = 0 ]
       then
         echo
@@ -299,91 +223,10 @@ if [ "${mail_install}" == "y" ];then
         REDTXT "ERROR"
         exit
     fi
-	    echo
-		chkconfig postfix on
-		chkconfig dovecot on
-		chkconfig opendkim on
-		chkconfig clamsmtpd on
-		chkconfig clamav on
-		alternatives --set mta /usr/sbin/sendmail.postfix
-	
-
-cat > /etc/init.d/clamsmtpd <<END
-#!/bin/sh
-# clamsmtpd     Script to start/stop clamsmtpd.
-#
-# chkconfig:    - 63 38
-# description:  clamsmtpd is smtpd for clamav antivirus daemon.
-#
-# processname:  clamsmtpd
-# pidfile:      /var/run/clamd.clamsmtp/clamsmtpd.pid
-#
-# author: Martynas Bieliauskas <martynas@inet.lt> 2004 Sep 20
-# author: Nathanael D. Noblet <nathanael@gnat.ca> 2010 Jan 18
-#
-
-# Source function library
-. /etc/rc.d/init.d/functions
-
-# Get network config
-. /etc/sysconfig/network
-
-# Source config
-if [ -f /etc/sysconfig/clamsmtpd ] ; then
-    . /etc/sysconfig/clamsmtpd
-else
-    CONFIG_FILE=/etc/clamsmtpd.conf
-    PID_DIR=/var/run/clamd.clamsmtp
-fi
-
-RETVAL=0
-
-start() {
-        echo -n \$"Starting ClamSmtpd: "
-        daemon /usr/sbin/clamsmtpd -f \$CONFIG_FILE -p \$PID_DIR/clamsmtpd.pid
-        RETVAL=\$?
         echo
-        [ \$RETVAL -eq 0 ] && touch /var/lock/subsys/clamsmtpd
-        return \$RETVAL
-}
-
-stop() {
-        echo -n \$"Stopping ClamSmtpd: "
-        killproc clamsmtpd
-        RETVAL=\$?
-        echo
-        [ \$RETVAL -eq 0 ] && rm -f \$PID_DIR/clamsmtpd.pid /var/lock/subsys/clamsmtpd
-        return \$RETVAL
-}
-
-restart() {
-        stop
-        start
-}
-
-case "\$1" in
-  start)
-        start
-        ;;
-  stop)
-        stop
-        ;;
-  status)
-      status clamsmtpd
-        ;;
-  restart)
-        restart
-        ;;
-  condrestart)
-        [ -f /var/lock/subsys/clamsmtpd ] && restart || :
-        ;;
-*)
-        echo \$"Usage: \$0 {start|stop|status|restart}"
-        exit 1
-
-esac
-exit \$?
-END
+	systemctl enable clamav-milter
+	systemctl enable dovecot
+	alternatives --set mta /usr/sbin/sendmail.postfix
         else
         YELLOWTXT "Mail packages installation skipped. Next step"
 fi
@@ -432,7 +275,7 @@ echo
 cat > /root/adovms/.adovms_index <<END
 mail	${VMB_PATH}
 END
-	fi
+fi
 echo
 echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 BLUEBG " FINISHED ViMbAdmin INSTALLATION "
