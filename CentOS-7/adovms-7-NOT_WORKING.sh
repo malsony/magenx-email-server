@@ -12,7 +12,8 @@ REPO_EPEL="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noar
 
 # Extra packages
 POSTFIX="http://repos.oostergo.net/6/postfix-3.0/postfix-3.0.1-1.el6.x86_64.rpm"
-EXTRA_PACKAGES="dovecot dovecot-pigeonhole opendkim git subversion clamav clamav-milter"
+MAIL_PACKAGES="dovecot dovecot-pigeonhole clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd"
+EXTRA_PACKAGES="opendkim git subversion "
 
 # Configs
 POSTFIX_MAIN_CF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/main.cf"
@@ -211,15 +212,15 @@ if [ "${mail_install}" == "y" ];then
     echo
     GREENTXT "Running mail packages installation"
     echo
-    rpm -qa | grep -qw epel-release || yum install ${REPO_EPEL}
-    yum --enablerepo=epel-testing -y install ${EXTRA_PACKAGES}
+    rpm -qa | grep -qw epel-release || yum -q -y install ${REPO_EPEL}
+    yum --enablerepo=epel-testing -y install ${EXTRA_PACKAGES} ${MAIL_PACKAGES}
     echo
     GREENTXT "Get the latest postfix"
     echo
     rpm -e --nodeps postfix
     rpm -ihv ${POSTFIX}
     echo
-    rpm  --quiet -q postfix dovecot dovecot-pigeonhole opendkim git subversion
+    rpm  --quiet -q postfix
     if [ $? = 0 ]
       then
         echo
@@ -229,7 +230,6 @@ if [ "${mail_install}" == "y" ];then
         exit
     fi
         echo
-	systemctl enable clamav-milter
 	systemctl enable dovecot
 	alternatives --set mta /usr/sbin/sendmail.postfix
         else
