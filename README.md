@@ -1,7 +1,7 @@
 MagenX e-mail Server
 ===================
 
-## How to setup mail server with Centos, Postfix, Dovecot, OpenDKIM, ClamAV, ClamSMTP and Roundcube 1.x + ViMbAdmin management interface<br/>
+## How to setup mail server with Centos, Postfix, Dovecot, OpenDKIM, ClamAV, ClamSMTP and Roundcube 1.1.x + ViMbAdmin management interface<br/>
 
 connection: TLS<br/>
 SMTP Port: 465<br/>
