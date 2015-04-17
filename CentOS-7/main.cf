@@ -77,7 +77,7 @@ block_dsl            = regexp:$additional_config_dir/block_dsl
 helo_access          = check_helo_access pcre:$additional_config_dir/helo_checks
 mx_access            = check_sender_mx_access cidr:$additional_config_dir/mx_access
 
-smtpd_milters           = inet:127.0.0.1:8891, inet:127.0.0.1:7357
+smtpd_milters           = inet:127.0.0.1:7357, inet:127.0.0.1:8891
 non_smtpd_milters       = ${smtpd_milters}
 milter_default_action   = quarantine
 milter_protocol   = 6
