@@ -479,10 +479,10 @@ wget -qO ${POSTFIX_FILTERS_URL}${FILTER}
 done
 
 echo
-WHITETXT "Writing Clamav-milter config"
+WHITETXT "Writing Clamav-Milter config"
 wget -qO /etc/mail/clamav-milter.conf ${CLAMAV_MILTER}
 echo
-WHITETXT "Writing Clamav-milter config"
+WHITETXT "Writing Clamav-Scanner config"
 wget -qO /etc/clamd.d/scan.conf ${CLAMAV_SCAN}
 
 systemctl enable clamd@scan.service
@@ -491,7 +491,6 @@ systemctl enable opendkim.service
 
 systemctl start clamd@scan.service
 systemctl start clamav-milter.service
-systemctl start opendkim.service
 systemctl restart postfix.service
 systemctl restart dovecot.service
 
@@ -546,6 +545,7 @@ KeyTable        /etc/opendkim/KeyTable
 SigningTable    refile:/etc/opendkim/SigningTable
 END
 echo
+systemctl start opendkim.service
 echo
 WHITETXT "============================================================================="
 echo
@@ -557,7 +557,7 @@ WHITETXT "======================================================================
 echo
 VMB_PATH=$(cat /root/adovms/.adovms_index | grep mail | awk '{print $2}')
 WHITETXT "Now we will try to edit ViMbAdmin v3 application.ini file:"
-WHITETXT "$VMB_PATH/application/configs/application.ini"
+WHITETXT "${VMB_PATH}/application/configs/application.ini"
 cd ${VMB_PATH}
 cp ${VMB_PATH}/application/configs/application.ini.dist ${VMB_PATH}/application/configs/application.ini
 sed -i 's/defaults.domain.transport = "virtual"/defaults.domain.transport = "dovecot"/' ${VMB_PATH}/application/configs/application.ini
