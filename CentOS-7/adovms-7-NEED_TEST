@@ -5,15 +5,15 @@
 #  All rights reserved.                                              #
 #====================================================================#
 # version
-ADOVMS_VER="3.0.11-3"
+ADOVMS_VER="3.0.11-5"
 
 # Repositories
 REPO_EPEL="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm"
 
 # Extra packages
 POSTFIX="http://repos.oostergo.net/6/postfix-3.0/postfix-3.0.1-1.el6.x86_64.rpm"
-MAIL_PACKAGES="dovecot dovecot-pigeonhole clamav-filesystem clamav-server clamav-update clamav-milter-systemd clamav-data clamav-server-systemd clamav-scanner-systemd clamav clamav-milter clamav-lib clamav-scanner"
-EXTRA_PACKAGES="opendkim git subversion "
+MAIL_PACKAGES="dovecot dovecot-mysql dovecot-pigeonhole clamav-filesystem clamav-server clamav-update clamav-milter-systemd clamav-data clamav-server-systemd clamav-scanner-systemd clamav clamav-milter clamav-lib clamav-scanner"
+EXTRA_PACKAGES="opendkim git subversion"
 
 # Configs
 POSTFIX_MAIN_CF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/main.cf"
