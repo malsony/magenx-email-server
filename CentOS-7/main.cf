@@ -135,13 +135,18 @@ smtpd_recipient_restrictions = white_client,
 smtpd_data_restrictions = reject_unauth_pipelining,
                           reject_multi_recipient_bounce
 
-sendmail_path = /usr/sbin/sendmail
+debug_peer_level = 2
+debugger_command =
+         PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
+         ddd $daemon_directory/$process_name $process_id & sleep 5
+
+sendmail_path = /usr/sbin/sendmail.postfix
+newaliases_path = /usr/bin/newaliases.postfix
+mailq_path = /usr/bin/mailq.postfix
 setgid_group = postdrop
-command_directory = /usr/sbin
+html_directory = no
 manpage_directory = /usr/share/man
-daemon_directory = /usr/libexec/postfix
-newaliases_path = /usr/bin/newaliases
-mailq_path = /usr/bin/mailq
-queue_directory = /var/spool/postfix
-mail_owner = postfix
-data_directory = /var/lib/postfix
+sample_directory = /usr/share/doc/postfix-3.0.1/samples
+readme_directory = /usr/share/doc/postfix-3.0.1/README_FILES
+meta_directory = /usr/share/postfix
+shlib_directory = no
