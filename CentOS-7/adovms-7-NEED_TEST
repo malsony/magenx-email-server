@@ -448,8 +448,8 @@ read -e -p "---> Enter your ssl cert location: " -i "/etc/ssl/domain.crt"  VMB_S
 read -e -p "---> Enter your ssl key location: " -i "/etc/ssl/server.key"  VMB_SSL_KEY
 
 wget -qO /etc/postfix/main.cf ${POSTFIX_MAIN_CF}
-sed -i "s/VMB_SSL_CRT/${VMB_SSL_CRT}/" /etc/postfix/main.cf
-sed -i "s/VMB_SSL_KEY/${VMB_SSL_KEY}/" /etc/postfix/main.cf
+sed -i "s,VMB_SSL_CRT,${VMB_SSL_CRT}," /etc/postfix/main.cf
+sed -i "s,VMB_SSL_KEY,${VMB_SSL_KEY}," /etc/postfix/main.cf
 sed -i "s/VMB_MYHOSTNAME/${VMB_MYHOSTNAME}/" /etc/postfix/main.cf
 sed -i "s/VMB_DOMAIN/${VMB_DOMAIN}/" /etc/postfix/main.cf
 sed -i "s/VMB_ADMIN_MAIL/${VMB_ADMIN_MAIL}/" /etc/postfix/main.cf
@@ -457,8 +457,8 @@ sed -i "s/VMB_ADMIN_MAIL/${VMB_ADMIN_MAIL}/" /etc/postfix/main.cf
 echo
 WHITETXT "Writing Dovecot config file"
 wget -qO /etc/dovecot/dovecot.conf ${DOVECOT_CONF}
-sed -i "s/VMB_SSL_CRT/${VMB_SSL_CRT}/" /etc/dovecot/dovecot.conf
-sed -i "s/VMB_SSL_KEY/${VMB_SSL_KEY}/" /etc/dovecot/dovecot.conf
+sed -i "s,VMB_SSL_CRT,${VMB_SSL_CRT}," /etc/dovecot/dovecot.conf
+sed -i "s,VMB_SSL_KEY,${VMB_SSL_KEY}," /etc/dovecot/dovecot.conf
 sed -i "s/VMB_ADMIN_MAIL/${VMB_ADMIN_MAIL}/" /etc/dovecot/dovecot.conf
 
 echo
@@ -475,7 +475,7 @@ WHITETXT "at /etc/postfix/config/*"
 cd /etc/postfix/config/
 for FILTER in ${POSTFIX_FILTERS}
 do
-wget -qO ${POSTFIX_FILTERS_URL}${FILTER}
+wget -q ${POSTFIX_FILTERS_URL}${FILTER}
 done
 
 echo
