@@ -5,7 +5,7 @@
 #  All rights reserved.                                              #
 #====================================================================#
 # version
-ADOVMS_VER="3.0.11-5"
+ADOVMS_VER="3.0.11-7"
 
 # Repositories
 REPO_EPEL="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm"
@@ -24,6 +24,9 @@ DOVECOT_CONF="https://raw.githubusercontent.com/magenx/magenx-email-server/maste
 DOVECOT_SQL_CONF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/dovecot-sql.conf"
 CLAMAV_MILTER="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/clamav-milter.conf"
 CLAMAV_SCAN="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/scan.conf"
+
+# Virus alert
+VIRUS_ALERT="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/virus_alert.sh"
 
 # Postfix filters
 POSTFIX_FILTERS="black_client block_dsl helo_checks mx_access white_client white_client_ip"
@@ -488,6 +491,11 @@ wget -qO /etc/mail/clamav-milter.conf ${CLAMAV_MILTER}
 echo
 WHITETXT "Writing Clamav-Scanner config"
 wget -qO /etc/clamd.d/scan.conf ${CLAMAV_SCAN}
+echo
+
+WHITETXT "Writing Virus alert script"
+wget -qO /etc/clamd.d/virus_alert.sh ${VIRUS_ALERT}
+chmod +x /etc/clamd.d/virus_alert.sh
 
 mkdir -p /var/log/clamd.scan
 touch /var/log/clamd.scan/clamd.scan.log
