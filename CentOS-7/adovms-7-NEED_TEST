@@ -23,7 +23,7 @@ CLAMAV_MILTER="https://raw.githubusercontent.com/magenx/magenx-email-server/mast
 CLAMAV_SCAN="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/scan.conf"
 
 # Postfix filters
-POSTFIX_FILTERS=(black_client block_dsl helo_checks mx_access white_client white_client_ip)
+POSTFIX_FILTERS="black_client block_dsl helo_checks mx_access white_client white_client_ip"
 POSTFIX_FILTERS_URL="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/postfix/config/"
 
 
