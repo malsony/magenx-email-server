@@ -485,6 +485,10 @@ echo
 WHITETXT "Writing Clamav-Scanner config"
 wget -qO /etc/clamd.d/scan.conf ${CLAMAV_SCAN}
 
+mkdir -p /var/log/clamd.scan
+touch /var/log/clamd.scan/clamd.scan.log
+chown -R clamscan:clamscan /var/log/clamd.scan
+
 systemctl enable clamd@scan.service
 systemctl enable clamav-milter.service
 systemctl enable opendkim.service
