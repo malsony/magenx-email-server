@@ -15,6 +15,9 @@ POSTFIX="http://repos.oostergo.net/7/postfix-3.0/postfix-3.0.1-1.el7.centos.x86_
 MAIL_PACKAGES="dovecot dovecot-mysql dovecot-pigeonhole clamav-filesystem clamav-server clamav-update clamav-milter-systemd clamav-data clamav-server-systemd clamav-scanner-systemd clamav clamav-milter clamav-lib clamav-scanner"
 EXTRA_PACKAGES="opendkim git subversion libicu"
 
+# PEAR packages
+PEAR="Net_IDNA2 Mail_mime Mail_mimeDecode Net_LDAP3 Auth_SASL Net_SMTP"
+
 # Configs
 POSTFIX_MAIN_CF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/main.cf"
 DOVECOT_CONF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/dovecot.conf"
@@ -25,7 +28,6 @@ CLAMAV_SCAN="https://raw.githubusercontent.com/magenx/magenx-email-server/master
 # Postfix filters
 POSTFIX_FILTERS="black_client block_dsl helo_checks mx_access white_client white_client_ip"
 POSTFIX_FILTERS_URL="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/postfix/config/"
-
 
 # Simple colors
 RED="\e[31;40m"
@@ -219,6 +221,8 @@ if [ "${mail_install}" == "y" ];then
     echo
     GREENTXT "Running mail packages installation"
     echo
+    pear config-set preferred_state alpha  >/dev/null 2>&1
+    pear install ${PEAR}  >/dev/null 2>&1
     rpm -qa | grep -qw epel-release || yum -q -y install ${REPO_EPEL}
     yum --enablerepo=epel-testing -y install ${EXTRA_PACKAGES} ${MAIL_PACKAGES}
     echo
