@@ -2,7 +2,7 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 SERVER=${HOSTNAME}
-ALERT=postmaster@domain.com
+ALERT=ADMIN_MAIL
 
 # The following parameters are passed to the invoked program in this order:
 # virus name, queue id, sender, destination, subject, message id, message date.
