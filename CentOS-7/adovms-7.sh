@@ -496,6 +496,7 @@ echo
 WHITETXT "Writing Virus alert script"
 wget -qO /etc/clamd.d/virus_alert.sh ${VIRUS_ALERT}
 chmod +x /etc/clamd.d/virus_alert.sh
+sed -i "s/ADMIN_MAIL/${VMB_ADMIN_MAIL}/" /etc/clamd.d/virus_alert.sh
 
 mkdir -p /var/log/clamd.scan
 touch /var/log/clamd.scan/clamd.scan.log
