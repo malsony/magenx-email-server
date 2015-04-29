@@ -29,7 +29,7 @@ CLAMAV_SCAN="https://raw.githubusercontent.com/magenx/magenx-email-server/master
 VIRUS_ALERT="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/virus_alert.sh"
 
 # Postfix filters
-POSTFIX_FILTERS="black_client block_dsl helo_checks mx_access white_client white_client_ip"
+POSTFIX_FILTERS="black_client black_client_ip block_dsl helo_checks mx_access white_client white_client_ip"
 POSTFIX_FILTERS_URL="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/postfix/config/"
 
 # Simple colors
