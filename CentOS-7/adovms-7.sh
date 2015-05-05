@@ -7,6 +7,9 @@
 # version
 ADOVMS_VER="3.0.11-7"
 
+# Roundcube version
+ROUNDCUBE="1.1.1"
+
 # Repositories
 REPO_EPEL="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm"
 
@@ -323,7 +326,7 @@ if [ "${rcb_down}" == "y" ];then
 		mkdir -p ${RCB_PATH}
                 cd ${RCB_PATH}
 		echo
-		wget -qO - http://downloads.sourceforge.net/project/roundcubemail/roundcubemail/1.1.1/roundcubemail-1.1.1.tar.gz | tar -xz --strip 1
+		wget -qO - http://downloads.sourceforge.net/project/roundcubemail/roundcubemail/${ROUNDCUBE}/roundcubemail-${ROUNDCUBE}.tar.gz | tar -xz --strip 1
 		echo
 		ls -l ${RCB_PATH}
 		echo
