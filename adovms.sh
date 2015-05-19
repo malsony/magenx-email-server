@@ -647,7 +647,6 @@ virtual_transport = dovecot
 
 smtpd_restriction_classes = rbl_cbl_abuseat_org,
                             rbl_sbl_spamhaus_org,
-                            rbl_dul_ru, 
                             rbl_spamcop,
                             white_client_ip,
                             black_client_ip,
@@ -658,7 +657,6 @@ smtpd_restriction_classes = rbl_cbl_abuseat_org,
                             mx_access
 
 rbl_cbl_abuseat_org  = reject_rbl_client cbl.abuseat.org
-rbl_dul_ru           = reject_rbl_client dul.ru
 rbl_sbl_spamhaus_org = reject_rbl_client sbl.spamhaus.org
 rbl_spamcop          = reject_rbl_client bl.spamcop.net
 
@@ -686,7 +684,6 @@ smtpd_client_restrictions = white_client_ip,
                             black_client,
                             helo_access,
                             block_dsl,
-                            rbl_dul_ru,
                             rbl_sbl_spamhaus_org,
                             rbl_spamcop,
                             rbl_cbl_abuseat_org,
