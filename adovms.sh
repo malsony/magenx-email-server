@@ -288,7 +288,7 @@ if [ "${mail_install}" == "y" ];then
     GREENTXT "Get the latest postfix"
 		echo
                 rpm -e --nodeps postfix
-		rpm -ihv http://repos.oostergo.net/6/postfix-3.0/postfix-3.0.1-1.el6.x86_64.rpm
+		rpm -ihv http://repos.oostergo.net/6/postfix-3.0/postfix-3.0.2-1.el6.x86_64.rpm
 		echo
                 rpm  --quiet -q postfix dovecot dovecot-pigeonhole opendkim git subversion
     if [ $? = 0 ]
