@@ -14,7 +14,7 @@ ROUNDCUBE="1.1.1"
 REPO_EPEL="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm"
 
 # Extra packages
-POSTFIX="http://repos.oostergo.net/7/postfix-3.0/postfix-3.0.1-1.el7.centos.x86_64.rpm"
+POSTFIX="http://repos.oostergo.net/7/postfix-3.0/postfix-3.0.2-1.el7.centos.x86_64.rpm"
 MAIL_PACKAGES="dovecot dovecot-mysql dovecot-pigeonhole clamav-filesystem clamav-server clamav-update clamav-milter-systemd clamav-data clamav-server-systemd clamav-scanner-systemd clamav clamav-milter clamav-lib clamav-scanner"
 EXTRA_PACKAGES="opendkim git subversion libicu"
 
