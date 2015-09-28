@@ -5,10 +5,10 @@
 #  All rights reserved.                                              #
 #====================================================================#
 # version
-ADOVMS_VER="3.0.11-7"
+ADOVMS_VER="3.0.11-9"
 
 # Roundcube version
-ROUNDCUBE="1.1.1"
+ROUNDCUBE="1.1.3"
 
 # Repositories
 REPO_EPEL="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm"
@@ -326,7 +326,7 @@ if [ "${rcb_down}" == "y" ];then
 		mkdir -p ${RCB_PATH}
                 cd ${RCB_PATH}
 		echo
-		wget -qO - http://downloads.sourceforge.net/project/roundcubemail/roundcubemail/${ROUNDCUBE}/roundcubemail-${ROUNDCUBE}.tar.gz | tar -xz --strip 1
+		wget -qO - https://downloads.sourceforge.net/project/roundcubemail/roundcubemail/${ROUNDCUBE}/roundcubemail-${ROUNDCUBE}-complete.tar.gz | tar -xz --strip 1
 		echo
 		ls -l ${RCB_PATH}
 		echo
