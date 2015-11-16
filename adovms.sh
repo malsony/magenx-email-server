@@ -215,22 +215,22 @@ fi
 echo
 WHITETXT "============================================================================="
 echo
-echo -n "---> Start ATrpms Testing Repository installation? [y/n][n]:"
+echo -n "---> Start Ghettoforge Plus Repository installation? [y/n][n]:"
 read repoC_install
 if [ "${repoC_install}" == "y" ];then
    echo
-     GREENTXT "Running Installation of ATrpms Testing repository"
+     GREENTXT "Running Installation of Ghettoforge Plus repository"
      echo
-     rpm  --quiet -q atrpms-repo
+     rpm  --quiet -q gf-release
   if [ "$?" = 0 ]
     then
       GREENTXT "ALREADY INSTALLED"
       else
-      rpm -Uvh http://dl.atrpms.net/el6-x86_64/atrpms/stable/atrpms-repo-6-7.el6.x86_64.rpm
+      rpm -Uvh http://mirror.symnds.com/distributions/gf/el/6/gf/x86_64/gf-release-6-8.gf.el6.noarch.rpm
   fi
      echo
      else
-     YELLOWTXT "ATrpms Testing repository installation skipped. Next step"
+     YELLOWTXT "Ghettoforge Plus repository installation skipped. Next step"
 fi
 echo
 WHITETXT "============================================================================="
@@ -275,7 +275,7 @@ if [ "${mail_install}" == "y" ];then
 		echo
     GREENTXT "Running mail packages installation"
 		echo
-                yum --enablerepo=atrpms-testing -y install dovecot dovecot-pigeonhole 
+                yum --enablerepo=gf-plus -y install dovecot22 dovecot22-mysql dovecot22-pigeonhole 
 		echo
     GREENTXT "Running opendkim installation"
 		echo
@@ -283,14 +283,14 @@ if [ "${mail_install}" == "y" ];then
 		echo
     GREENTXT "Running ClamAV antivirus scanner installation"
 		echo
-		yum --disablerepo=rpmforge,atrpms -y install clamsmtp clamd clamav
+		yum --disablerepo=rpmforge -y install clamsmtp clamd clamav
 		echo
     GREENTXT "Get the latest postfix"
 		echo
                 rpm -e --nodeps postfix
 		rpm -ihv http://repos.oostergo.net/6/postfix-3.0/postfix-3.0.2-1.el6.x86_64.rpm
 		echo
-                rpm  --quiet -q postfix dovecot dovecot-pigeonhole opendkim git subversion
+                rpm  --quiet -q postfix dovecot22 dovecot22-pigeonhole opendkim git subversion
     if [ $? = 0 ]
       then
         echo
