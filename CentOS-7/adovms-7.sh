@@ -5,17 +5,17 @@
 #  All rights reserved.                                              #
 #====================================================================#
 # version
-ADOVMS_VER="3.0.11-9"
+ADOVMS_VER="3.0.16"
 
 # Roundcube version
 ROUNDCUBE="1.1.3"
 
 # Repositories
 REPO_EPEL="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm"
+REPO_GF="http://mirror.symnds.com/distributions/gf/el/7/gf/x86_64/gf-release-7-8.gf.el7.noarch.rpm"
 
 # Extra packages
-POSTFIX="http://repos.oostergo.net/7/postfix-3.0/postfix-3.0.2-1.el7.centos.x86_64.rpm"
-MAIL_PACKAGES="dovecot dovecot-mysql dovecot-pigeonhole clamav-filesystem clamav-server clamav-update clamav-milter-systemd clamav-data clamav-server-systemd clamav-scanner-systemd clamav clamav-milter clamav-lib clamav-scanner"
+MAIL_PACKAGES="postfix3 dovecot22 dovecot22-mysql dovecot22-pigeonhole clamav-filesystem clamav-server clamav-update clamav-milter-systemd clamav-data clamav-server-systemd clamav-scanner-systemd clamav clamav-milter clamav-lib clamav-scanner"
 EXTRA_PACKAGES="opendkim git subversion libicu"
 
 # PEAR packages
@@ -227,18 +227,17 @@ read mail_install
 if [ "${mail_install}" == "y" ];then
     echo
     GREENTXT "Running mail packages installation"
-    echo
-    pear config-set preferred_state alpha  >/dev/null 2>&1
-    pear install ${PEAR}  >/dev/null 2>&1
-    rpm -qa | grep -qw epel-release || yum -q -y install ${REPO_EPEL}
-    yum --enablerepo=epel-testing -y install ${EXTRA_PACKAGES} ${MAIL_PACKAGES}
-    echo
-    GREENTXT "Get the latest postfix"
-    echo
     rpm -e --nodeps postfix >/dev/null 2>&1
-    rpm -ihv ${POSTFIX}
     echo
-    rpm  --quiet -q postfix
+    pear config-set preferred_state alpha >/dev/null 2>&1
+    pear install ${PEAR} >/dev/null 2>&1
+    rpm -qa | grep -qw epel-release || yum -q -y install ${REPO_EPEL}
+    yum -q -y install ${REPO_GF}
+    yum --enablerepo=gf-plus -y install ${MAIL_PACKAGES}
+    yum --enablerepo=epel-testing -y install ${EXTRA_PACKAGES} 
+    echo
+    echo
+    rpm --quiet -q postfix
     if [ $? = 0 ]
       then
         echo
