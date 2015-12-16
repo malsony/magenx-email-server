@@ -237,7 +237,7 @@ if [ "${mail_install}" == "y" ];then
     yum --enablerepo=epel-testing -y install ${EXTRA_PACKAGES} 
     echo
     echo
-    rpm --quiet -q postfix
+    rpm --quiet -q postfix3
     if [ $? = 0 ]
       then
         echo
