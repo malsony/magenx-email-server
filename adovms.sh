@@ -5,7 +5,7 @@
 #  All rights reserved.                                              #
 #====================================================================#
 
-ADOVMS_VER="3.0.10-8"
+ADOVMS_VER="3.0.10-9"
 
 # Simple colors
 RED="\e[31;40m"
@@ -461,7 +461,7 @@ if [ "${rcb_down}" == "y" ];then
 		mkdir -p ${RCB_PATH}
                 cd ${RCB_PATH}
 		echo
-		wget -qO - http://downloads.sourceforge.net/project/roundcubemail/roundcubemail/1.1.1/roundcubemail-1.1.1.tar.gz | tar -xz --strip 1
+		wget -qO - https://downloads.sourceforge.net/project/roundcubemail/roundcubemail/1.1.4/roundcubemail-1.1.4-complete.tar.gz | tar -xz --strip 1
 		echo
 		ls -l ${RCB_PATH}
 		echo
