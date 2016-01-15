@@ -5,7 +5,7 @@
 #  All rights reserved.                                              #
 #====================================================================#
 # version
-ADOVMS_VER="3.0.19"
+ADOVMS_VER="3.0.21"
 
 # Roundcube version
 ROUNDCUBE="1.1.4"
