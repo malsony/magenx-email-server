@@ -304,7 +304,7 @@ if [ "${mail_install}" == "y" ];then
 		chkconfig dovecot on
 		chkconfig opendkim on
 		chkconfig clamsmtpd on
-		chkconfig clamav on
+		chkconfig clamd on
 		alternatives --set mta /usr/sbin/sendmail.postfix
 	
 
