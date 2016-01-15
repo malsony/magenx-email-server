@@ -8,7 +8,7 @@
 ADOVMS_VER="3.0.19"
 
 # Roundcube version
-ROUNDCUBE="1.1.3"
+ROUNDCUBE="1.1.4"
 
 # Repositories
 REPO_EPEL="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm"
