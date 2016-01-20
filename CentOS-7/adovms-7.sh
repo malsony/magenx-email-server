@@ -5,7 +5,7 @@
 #  All rights reserved.                                              #
 #====================================================================#
 # version
-ADOVMS_VER="3.0.21"
+ADOVMS_VER="3.0.25"
 
 # Roundcube version
 ROUNDCUBE="1.1.4"
@@ -24,6 +24,7 @@ PEAR="Net_IDNA2 Mail_mime Mail_mimeDecode Net_LDAP3 Auth_SASL Net_SMTP"
 # Configs
 POSTFIX_MAIN_CF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/main.cf"
 POSTFIX_MASTER_CF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/master.cf"
+POSTFIX_REPLY_FILTER="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/smtp_reply_filter"
 DOVECOT_CONF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/dovecot.conf"
 DOVECOT_SQL_CONF="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/dovecot-sql.conf"
 CLAMAV_MILTER="https://raw.githubusercontent.com/magenx/magenx-email-server/master/CentOS-7/clamav-milter.conf"
@@ -465,6 +466,7 @@ sed -i "s/VMB_DOMAIN/${VMB_DOMAIN}/" /etc/postfix/main.cf
 sed -i "s/VMB_ADMIN_MAIL/${VMB_ADMIN_MAIL}/" /etc/postfix/main.cf
 
 wget -qO /etc/postfix/master.cf ${POSTFIX_MASTER_CF}
+wget -qO /etc/postfix/smtp_reply_filter ${POSTFIX_REPLY_FILTER}
 
 echo
 WHITETXT "Writing Dovecot config file"
