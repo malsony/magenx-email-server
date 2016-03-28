@@ -226,7 +226,7 @@ if [ "${repoC_install}" == "y" ];then
     then
       GREENTXT "ALREADY INSTALLED"
       else
-      rpm -Uvh http://mirror.symnds.com/distributions/gf/el/6/gf/x86_64/gf-release-6-8.gf.el6.noarch.rpm
+      rpm -Uvh http://mirror.symnds.com/distributions/gf/el/6/gf/x86_64/gf-release-6-10.gf.el6.noarch.rpm
   fi
      echo
      else
@@ -288,7 +288,7 @@ if [ "${mail_install}" == "y" ];then
     GREENTXT "Get the latest postfix"
 		echo
                 rpm -e --nodeps postfix
-		rpm -ihv http://repos.oostergo.net/6/postfix-3.0/postfix-3.0.2-1.el6.x86_64.rpm
+		rpm -ihv http://repos.oostergo.net/6/postfix-3.0/postfix-3.0.4-1.el6.x86_64.rpm
 		echo
                 rpm  --quiet -q postfix dovecot22 dovecot22-pigeonhole opendkim git subversion
     if [ $? = 0 ]
