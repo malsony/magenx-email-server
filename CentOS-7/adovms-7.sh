@@ -11,7 +11,6 @@ ADOVMS_VER="3.0.35"
 ROUNDCUBE="1.1.4"
 
 # Repositories
-REPO_EPEL="http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm"
 REPO_GF="http://mirror.symnds.com/distributions/gf/el/7/gf/x86_64/gf-release-7-10.gf.el7.noarch.rpm"
 
 # Extra packages
@@ -232,7 +231,7 @@ if [ "${mail_install}" == "y" ];then
     echo
     pear config-set preferred_state alpha >/dev/null 2>&1
     pear install ${PEAR} >/dev/null 2>&1
-    rpm -qa | grep -qw epel-release || yum -q -y install ${REPO_EPEL}
+    rpm -qa | grep -qw epel-release || yum -q -y install epel-release
     yum -q -y install ${REPO_GF}
     yum --enablerepo=gf-plus -y install ${MAIL_PACKAGES}
     yum --enablerepo=epel-testing -y install ${EXTRA_PACKAGES} 
