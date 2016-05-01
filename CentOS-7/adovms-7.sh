@@ -5,7 +5,7 @@
 #  All rights reserved.                                              #
 #====================================================================#
 # version
-ADOVMS_VER="3.0.35"
+ADOVMS_VER="3.1.20"
 
 # Roundcube version
 ROUNDCUBE="1.1.4"
@@ -511,7 +511,9 @@ chown -R clamscan:clamscan /var/log/clamd.scan
 systemctl enable clamd@scan.service
 systemctl enable clamav-milter.service
 systemctl enable opendkim.service
+systemctl enable clamd@scan
 
+systemctl start clamd@scan
 systemctl start clamd@scan.service
 systemctl start clamav-milter.service
 systemctl restart postfix.service
