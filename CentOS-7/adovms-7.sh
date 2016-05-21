@@ -1,14 +1,14 @@
 #!/bin/bash
 #====================================================================#
 #  MagenX - Automated Deployment of Virtual Mail Server              #
-#  Copyright (C) 2015 admin@magenx.com                               #
+#  Copyright (C) 2016 admin@magenx.com                               #
 #  All rights reserved.                                              #
 #====================================================================#
 # version
-ADOVMS_VER="3.1.20"
+ADOVMS_VER="3.2"
 
 # Roundcube version
-ROUNDCUBE="1.1.4"
+ROUNDCUBE="1.1.5"
 
 # Repositories
 REPO_GF="http://mirror.symnds.com/distributions/gf/el/7/gf/x86_64/gf-release-7-10.gf.el7.noarch.rpm"
@@ -99,7 +99,7 @@ if [[ ${EUID} -ne 0 ]]; then
   GREENTXT "PASS: ROOT!"
 fi
 
-# do we have CentOS 6?
+# do we have CentOS 7?
 if grep "CentOS.* 7\." /etc/redhat-release  > /dev/null 2>&1; then
   GREENTXT "PASS: CENTOS RELEASE 7"
   else
@@ -313,7 +313,7 @@ echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 BLUEBG " NOW DOWNLOADING ROUNDCUBE "
 echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 echo
-echo -n "---> Download and configure ROUNDCUBE 1.1.x? [y/n][n]:"
+echo -n "---> Download and configure ROUNDCUBE v${ROUNDCUBE}? [y/n][n]:"
 read rcb_down
 if [ "${rcb_down}" == "y" ];then
      read -e -p "---> Edit your installation folder full path: " -i "/var/www/html/rcb" RCB_PATH
