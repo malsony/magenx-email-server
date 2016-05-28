@@ -8,7 +8,7 @@
 ADOVMS_VER="3.2"
 
 # Roundcube version
-ROUNDCUBE="1.1.5"
+ROUNDCUBE="1.2.0"
 
 # Repositories
 REPO_GF="http://mirror.symnds.com/distributions/gf/el/7/gf/x86_64/gf-release-7-10.gf.el7.noarch.rpm"
